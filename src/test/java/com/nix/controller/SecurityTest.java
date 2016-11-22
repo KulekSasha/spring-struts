@@ -27,6 +27,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -94,8 +95,10 @@ public class SecurityTest {
     @Test
     public void requiresAuthentication() throws Exception {
         mockMvc
-                .perform(get("/admin/users"))
+                .perform(get("/admin/users").with(user("admin").password("pass").roles("USER","ADMIN")))
+                .andDo(print())
                 .andExpect(status().isFound());
+//        !!!!!!
     }
 
     @Test
