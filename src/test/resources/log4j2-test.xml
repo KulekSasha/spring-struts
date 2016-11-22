@@ -51,8 +51,14 @@
             <AppenderRef ref="RollingFile"/>
         </Logger>
 
+        <Logger name="org.springframework.security" additivity="false"
+                level="all">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
 
-        <Root level="error">
+
+        <Root level="info">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Root>

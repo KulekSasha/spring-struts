@@ -9,7 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.annotation.SecurityTestExecutionListeners;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ContextConfiguration;
@@ -76,14 +78,14 @@ public class SecurityTest {
     }
 
     @Test(timeout = 2000L)
-    @WithMockUser(roles={"ADMIN"})
+    @WithMockUser(roles = {"ADMIN"})
     public void userPerformLogin() throws Exception {
 
 //        when(userDetailsServiceMock.loadUserByUsername(anyString()))
 //                .thenReturn(any(UserDetails.class));
 
         mockMvc
-                .perform(post("/login").with(httpBasic("user","pass")))
+                .perform(post("/login").param("login", "admin").param("pwd", "pass"))
 //                .perform(formLogin("/login").user("admin").password("pass"))
                 .andDo(print());
 
@@ -94,19 +96,34 @@ public class SecurityTest {
 
     @Test
     public void requiresAuthentication() throws Exception {
-        mockMvc
-                .perform(get("/admin/users").with(user("admin").password("pass").roles("USER","ADMIN")))
+        mockMvc.perform(get("/admin/users").with(user("admin").password("pass").roles("USER", "ADMIN")))
                 .andDo(print())
-                .andExpect(status().isFound());
-//        !!!!!!
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void requiresAuthentication2() throws Exception {
+        mockMvc.perform(get("/user/user").with(user("user").password("pass").roles("USER")))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void requiresAuthentication3() throws Exception {
+        mockMvc.perform(get("/admin/users").with(user("user").password("pass").roles("USER")))
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 
     @Test
     public void authenticationSuccess() throws Exception {
         mockMvc
-                .perform(formLogin().user("login", "testUser_1").password("pwd", "testUser_1"))
-                .andExpect(status().isFound())
-                .andExpect(redirectedUrl("/"))
-                .andExpect(authenticated().withUsername("user"));
+//                .perform(formLogin().user("login", "admin").password("pwd", "pass"))
+                .perform(post("/login").param("login", "admin").param("pwd", "pass")
+                        .with(user("admin").password("pass").authorities(new SimpleGrantedAuthority("ROLE_ADMIN"))))
+                .andDo(print())
+//                .andExpect(status().isFound())
+//                .andExpect(authenticated().withUsername("user"))
+        ;
     }
 }

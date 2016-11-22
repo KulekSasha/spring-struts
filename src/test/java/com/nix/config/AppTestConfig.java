@@ -19,6 +19,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -119,5 +120,12 @@ public class AppTestConfig {
         UserDetails userDetails = (UserDetails) new User("admin", "pass", Arrays.asList(authority));
 
         return new InMemoryUserDetailsManager(Arrays.asList(userDetails));
+    }
+
+    @Bean
+    public DaoAuthenticationProvider provider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService());
+        return provider;
     }
 }
