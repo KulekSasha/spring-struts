@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -29,13 +30,14 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.Properties;
+
+import static java.util.Arrays.asList;
 
 @Configuration
 @PropertySource(value = {"classpath:app-test.properties"})
 @EnableTransactionManagement
-public class AppTestConfig {
+public class DaoTestConfig {
 
     @Autowired
     private Environment env;
@@ -94,38 +96,41 @@ public class AppTestConfig {
         };
     }
 
-    @Bean
-    public UserService userService() {
-        return Mockito.mock(UserServiceImpl.class);
-    }
-
-    @Bean
-    public RoleService roleService() {
-        return Mockito.mock(RoleService.class);
-    }
-
-    @Bean
-    public ReCaptchaImpl reCaptcha() {
-        return Mockito.mock(ReCaptchaImpl.class);
-    }
-
 //    @Bean
-//    public UserDetailsService userDetailsService(){
-//        return Mockito.mock(UserDetailsServiceImpl.class);
+//    public UserService userService() {
+//        return Mockito.mock(UserServiceImpl.class);
+//    }
+//
+//    @Bean
+//    public RoleService roleService() {
+//        return Mockito.mock(RoleService.class);
+//    }
+//
+//    @Bean
+//    public ReCaptchaImpl reCaptcha() {
+//        return Mockito.mock(ReCaptchaImpl.class);
+//    }
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//
+//        GrantedAuthority adminAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
+//        GrantedAuthority userAuthority = new SimpleGrantedAuthority("ROLE_USER");
+//
+//        UserDetails adminUserDetails = new User("adminLogin", "adminPass",
+//                asList(adminAuthority));
+//        UserDetails userUserDetails = new User("userLogin", "userPass",
+//                asList(userAuthority));
+//
+//        return new InMemoryUserDetailsManager(asList(adminUserDetails, userUserDetails));
 //    }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ADMIN");
-        UserDetails userDetails = (UserDetails) new User("admin", "pass", Arrays.asList(authority));
+//    @Bean
+//    @Primary
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider.setUserDetailsService(userDetailsService());
+//        return authenticationProvider;
+//    }
 
-        return new InMemoryUserDetailsManager(Arrays.asList(userDetails));
-    }
-
-    @Bean
-    public DaoAuthenticationProvider provider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService());
-        return provider;
-    }
 }

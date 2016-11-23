@@ -3,7 +3,7 @@ package com.nix.dao.hiber;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import com.nix.config.AppTestConfig;
+import com.nix.config.DaoTestConfig;
 import com.nix.dao.UserDao;
 import com.nix.model.Role;
 import com.nix.model.User;
@@ -25,7 +25,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppTestConfig.class)
+@ContextConfiguration(classes = DaoTestConfig.class)
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,

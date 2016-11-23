@@ -1,6 +1,6 @@
 package com.nix.controller;
 
-import com.nix.config.AppTestConfig;
+import com.nix.config.ControllerTestConfig;
 import com.nix.config.WebAppConfig;
 import com.nix.model.Role;
 import com.nix.model.User;
@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(
-        classes = {AppTestConfig.class,
+        classes = {ControllerTestConfig.class,
                 WebAppConfig.class,})
 @WebAppConfiguration
 public class AdminControllerTest {

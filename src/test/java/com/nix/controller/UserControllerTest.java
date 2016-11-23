@@ -1,6 +1,7 @@
 package com.nix.controller;
 
-import com.nix.config.AppTestConfig;
+import com.nix.config.ControllerTestConfig;
+import com.nix.config.DaoTestConfig;
 import com.nix.config.WebAppConfig;
 import com.nix.model.Role;
 import com.nix.model.User;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(
-        classes = {AppTestConfig.class,
+        classes = {ControllerTestConfig.class,
                 WebAppConfig.class,})
 @WebAppConfiguration
 public class UserControllerTest {

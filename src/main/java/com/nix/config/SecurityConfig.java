@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import javax.annotation.Resource;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -24,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     Environment env;
 
-    @Autowired
+    @Resource(name = "userDetailsService")
     public void setUserDetailsService(@Qualifier("userDetailsService") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
