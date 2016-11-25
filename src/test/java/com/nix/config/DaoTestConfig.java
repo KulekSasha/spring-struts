@@ -4,35 +4,20 @@ import com.nix.dao.RoleDao;
 import com.nix.dao.UserDao;
 import com.nix.dao.hiber.HRoleDao;
 import com.nix.dao.hiber.HUserDao;
-import com.nix.service.RoleService;
-import com.nix.service.UserService;
-import com.nix.service.impl.UserServiceImpl;
-import net.tanesha.recaptcha.ReCaptchaImpl;
 import org.hibernate.SessionFactory;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
-
-import static java.util.Arrays.asList;
 
 @Configuration
 @PropertySource(value = {"classpath:app-test.properties"})

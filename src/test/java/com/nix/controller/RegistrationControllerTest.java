@@ -1,7 +1,6 @@
 package com.nix.controller;
 
 import com.nix.config.ControllerTestConfig;
-import com.nix.config.DaoTestConfig;
 import com.nix.config.WebAppConfig;
 import com.nix.model.Role;
 import com.nix.model.User;

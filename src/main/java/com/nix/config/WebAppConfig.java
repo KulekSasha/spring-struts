@@ -12,9 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-@Configuration
-@EnableWebMvc
-@ComponentScan({"com.nix.controller"})
+//@Configuration
+//@EnableWebMvc
+//@ComponentScan({"com.nix.controller"})
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
     private static final int SECONDS_IN_YEAR = 60 * 60 * 24 * 365;
