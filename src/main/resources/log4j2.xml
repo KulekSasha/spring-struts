@@ -56,7 +56,7 @@
         </Logger>
 
         <Logger name="org.springframework.security" additivity="false"
-                level="info">
+                level="debug">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>

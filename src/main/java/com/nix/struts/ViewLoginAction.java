@@ -11,4 +11,5 @@ import org.apache.struts2.convention.annotation.ResultPath;
 @ResultPath("/WEB-INF/jsp")
 @Result(name = "success", location = "login.jsp")
 public class ViewLoginAction extends ActionSupport {
+
 }

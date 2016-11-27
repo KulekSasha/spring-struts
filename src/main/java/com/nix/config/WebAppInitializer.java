@@ -48,8 +48,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         ContextLoaderListener contextLoaderListener = new ContextLoaderListener(appContext);
         servletContext.addListener(contextLoaderListener);
 
-        FilterRegistration.Dynamic filter = servletContext.addFilter(
-                "StrutsDispatcher", new StrutsPrepareAndExecuteFilter());
-        filter.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+
     }
 }
