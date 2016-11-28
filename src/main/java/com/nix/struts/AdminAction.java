@@ -5,9 +5,7 @@ import com.nix.service.RoleService;
 import com.nix.service.UserService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.PrincipalAware;
 import org.apache.struts2.interceptor.PrincipalProxy;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -58,8 +56,8 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
         this.userLogin = userLogin;
     }
 
-    @Action(value = "users",
-            results = {@Result(name = "success", location = "/WEB-INF/jsp/admin/admin.jsp")})
+//    @Action(value = "users",
+//            results = {@Result(name = "success", location = "/WEB-INF/jsp/admin/admin.jsp")})
     public String adminPageGet() {
         log.debug("invoke adminPage action");
 
@@ -72,8 +70,8 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
         }
     }
 
-    @Action(value = "/admin/users/{*}/delete",
-            results = {@Result(name = "success", location = "/WEB-INF/jsp/admin/admin.jsp")})
+//    @Action(value = "/admin/users/{*}/delete",
+//            results = {@Result(name = "success", location = "/WEB-INF/jsp/admin/admin.jsp")})
     public String adminDeleteUserPost() {
         log.debug("delete user with userLogin: {}", userLogin);
         log.debug("delete user with userLogin: {}", request.getRequestURL().toString());

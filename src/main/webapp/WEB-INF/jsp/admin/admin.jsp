@@ -58,7 +58,7 @@
             modal: true,
             buttons: {
                 "Delete": function () {
-                    $.post("${url}/admin/users/"+ userLogin +"/delete", {userId: userLogin}, function () {
+                    $.post("${url}/admin/users/"+ userLogin +"/delete", {userLogin: userLogin}, function () {
                         location.reload();
                     })
                         .fail(function () {
