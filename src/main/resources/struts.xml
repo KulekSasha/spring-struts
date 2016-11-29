@@ -3,7 +3,7 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-    <!--<constant name="struts.devMode" value="true"/>-->
+    <constant name="struts.devMode" value="true"/>
 
     <!--<package name="helloworld" extends="struts-default">-->
 
@@ -28,15 +28,31 @@
 
 
     <package name="default" namespace="/" extends="struts-default">
+
+        <interceptors>
+            <interceptor name="unique-login" class="com.nix.struts.interceptor.UniqueLoginInterceptor"/>
+        </interceptors>
+
         <action name="admin/users/add" method="adminAddUser" class="com.nix.struts.AdminAction">
             <result name="success">/WEB-INF/jsp/admin/admin_add.jsp</result>
             <result name="notAllowed" type="redirect">/WEB-INF/jsp/errors/405.jsp</result>
+
         </action>
 
         <action name="admin/users/addDo" method="adminAddUserDo"
                 class="com.nix.struts.AdminAction">
-            <result name="success" type="redirect">/admin/users</result>
+            <result name="success" type="redirect">admin/users</result>
             <result name="input">/WEB-INF/jsp/admin/admin_add.jsp</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="unique-login">
+                <param name="loginField">newUser.login</param>
+            </interceptor-ref>
+
+        </action>
+
+        <action name="admin/users" method="adminPageGet" class="com.nix.struts.AdminAction">
+            <result name="success">/WEB-INF/jsp/admin/admin.jsp</result>
+            <result name="login">/WEB-INF/jsp/login.jsp</result>
         </action>
     </package>
 

@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.Validator;
-import java.util.Locale;
 import java.util.Set;
 
 @Namespace("/")
@@ -107,7 +106,7 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
 
     @Action(value = "admin/users",
             results = {@Result(name = "success", location = "/WEB-INF/jsp/admin/admin.jsp"),
-                    @Result(name = "login", location = "/WEB-INF/jsp/admin/admin.jsp")})
+                    @Result(name = "login", location = "/WEB-INF/jsp/login.jsp")})
     public String adminPageGet() {
         log.debug("invoke adminPage action");
 
@@ -149,9 +148,9 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
             addFieldError("password", "passwords not equal");
         }
 
-        if (userService.findByLogin(newUser.getLogin()) != null) {
-            addFieldError("login", messageSource.getMessage("non.unique.userLogin", null, Locale.getDefault()));
-        }
+//        if (userService.findByLogin(newUser.getLogin()) != null) {
+//            addFieldError("login", messageSource.getMessage("non.unique.userLogin", null, Locale.getDefault()));
+//        }
 
         Set<ConstraintViolation<User>> violations = validator.validate(newUser);
 
