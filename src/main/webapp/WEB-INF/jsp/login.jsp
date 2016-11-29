@@ -1,19 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <c:set var="url">${pageContext.request.contextPath}</c:set>
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapCss"/>
-    <spring:url value="/resources/js/jquery.js" var="jquery"/>
-    <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapJs"/>
+
+    <link href="${url}/resources/css/bootstrap.min.css" rel="stylesheet">
 
     <title>Login</title>
 
-    <link href="${bootstrapCss}" rel="stylesheet"/>
 
     <style>
         body {
@@ -61,10 +60,10 @@
 </div>
 
 <!-- jQuery Version 1.11.1 -->
-<script src="${jquery}"></script>
+<script src="${url}/resources/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="${bootstrapJs}"></script>
+<script src="${url}/resources/js/bootstrap.min.js"></script>
 
 </body>
 </html>

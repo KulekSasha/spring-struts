@@ -3,25 +3,41 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-    <constant name="struts.devMode" value="true"/>
+    <!--<constant name="struts.devMode" value="true"/>-->
 
-    <package name="helloworld" extends="struts-default">
+    <!--<package name="helloworld" extends="struts-default">-->
 
-        <action name="delete"
-                class="com.nix.struts.AdminAction"
-                method="adminDeleteUserPost">
-            <result name="success">/WEB-INF/jsp/admin/admin.jsp</result>
-            <!--<interceptor-ref name="basicStack"/>-->
+    <!--&lt;!&ndash;<action name="delete"&ndash;&gt;-->
+    <!--&lt;!&ndash;class="com.nix.struts.AdminAction"&ndash;&gt;-->
+    <!--&lt;!&ndash;method="adminDeleteUserPost">&ndash;&gt;-->
+    <!--&lt;!&ndash;<result name="success">/WEB-INF/jsp/admin/admin.jsp</result>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<interceptor-ref name="basicStack"/>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;</action>&ndash;&gt;-->
+
+    <!--<action name="users"-->
+    <!--class="com.nix.struts.AdminAction"-->
+    <!--method="adminPageGet" converter="com.nix.">-->
+    <!--<result name="success">/WEB-INF/jsp/admin/admin.jsp</result>-->
+    <!--<interceptor-ref name="DefaultWorkflowInterceptor">-->
+    <!--<param name="includeMethods">POST</param>-->
+    <!--</interceptor-ref>-->
+
+    <!--</action>-->
+
+    <!--</package>-->
+
+
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="admin/users/add" method="adminAddUser" class="com.nix.struts.AdminAction">
+            <result name="success">/WEB-INF/jsp/admin/admin_add.jsp</result>
+            <result name="notAllowed" type="redirect">/WEB-INF/jsp/errors/405.jsp</result>
         </action>
 
-        <action name="users"
-                class="com.nix.struts.AdminAction"
-                method="adminPageGet" converter="com.nix.">
-            <result name="success">/WEB-INF/jsp/admin/admin.jsp</result>
-
-
+        <action name="admin/users/addDo" method="adminAddUserDo"
+                class="com.nix.struts.AdminAction">
+            <result name="success" type="redirect">/admin/users</result>
+            <result name="input">/WEB-INF/jsp/admin/admin_add.jsp</result>
         </action>
-
     </package>
 
 </struts>

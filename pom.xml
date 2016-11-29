@@ -50,10 +50,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
+
+        <!--to remove-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
+        <!--to remove-->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -104,9 +108,9 @@
             <version>${struts2.version}</version>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.apache.struts</groupId>-->
-            <!--<artifactId>struts2-rest-plugin</artifactId>-->
-            <!--<version>${struts2.version}</version>-->
+            <!--<groupId>com.github.umeshawasthi</groupId>-->
+            <!--<artifactId>struts2-jsr303-validation-plugin</artifactId>-->
+            <!--<version>1.0</version>-->
         <!--</dependency>-->
 
 

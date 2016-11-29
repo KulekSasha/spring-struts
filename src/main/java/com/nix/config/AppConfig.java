@@ -6,6 +6,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import javax.validation.Validator;
 
 @Configuration
 @Import(value = {DaoConfig.class, SecurityConfig.class})
@@ -24,6 +27,13 @@ public class AppConfig {
         messageSource.setBasename("messages");
         messageSource.setCacheSeconds(60);
         return messageSource;
+    }
+
+    @Bean
+    public Validator validator(){
+        LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+        validatorFactoryBean.setValidationMessageSource(messageSource());
+        return validatorFactoryBean;
     }
 
 }

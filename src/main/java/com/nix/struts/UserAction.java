@@ -4,6 +4,7 @@ import com.nix.model.User;
 import com.nix.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.PrincipalAware;
 import org.apache.struts2.interceptor.PrincipalProxy;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-
+@Namespace("/")
 public class UserAction extends ActionSupport implements PrincipalAware {
 
     private static final Logger log = LoggerFactory.getLogger(UserAction.class);
@@ -26,7 +27,7 @@ public class UserAction extends ActionSupport implements PrincipalAware {
         this.userService = userService;
     }
 
-    @Action(value = "/user/user",
+    @Action(value = "user/user",
             results = {@Result(name = "success", location = "/WEB-INF/jsp/user/user.jsp"),
                     @Result(name = "login", location = "/WEB-INF/jsp/login.jsp")}
     )
