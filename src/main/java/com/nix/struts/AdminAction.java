@@ -19,7 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Conversion(
         conversions = {
-                @TypeConversion(key = "newUser.role", converter = "com.nix.struts.converter.RoleConverter")
+                @TypeConversion(key = "newUser.role",
+                        converter = "com.nix.struts.converter.RoleConverter"),
+                @TypeConversion(key = "editableUser.role",
+                        converter = "com.nix.struts.converter.RoleConverter")
         })
 public class AdminAction extends ActionSupport implements PrincipalAware, ServletRequestAware {
 
@@ -30,6 +33,16 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
     private HttpServletRequest request;
     private User newUser;
     private User editableUser;
+    private String[] roles = new String[]{"admin", "user"};
+
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
+    }
 
     @Autowired
     public void setUserService(@Qualifier("userService") UserService userService) {

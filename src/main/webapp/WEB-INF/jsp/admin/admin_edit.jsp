@@ -19,6 +19,10 @@
         body {
             padding-top: 70px;
         }
+
+        li {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -36,7 +40,7 @@
         <div class="col-lg-8 col-lg-offset-2 text-left">
             <h3>Edit user</h3> </br>
 
-            <s:form method="POST" class="form-horizontal" action="admin/users/*/editDo"
+            <s:form method="POST" class="form-horizontal" action="admin/users/editDo"
                     namespace="/" theme="simple">
 
                 <div class="form-group">
@@ -112,9 +116,14 @@
                 <div class="form-group">
                     <label class="control-label col-lg-2" for="role">Role:</label>
                     <div class="col-lg-4">
-                        <s:select path="role" class="list-group-item" id="role"
-                                  name="editableUser.role" value="user"
-                                  list="#{'admin':'Admin', 'user':'User'}"/>
+                        <s:select class="list-group-item" id="role"
+                                  name="editableUser.role"
+
+                                  list="roles"
+                                  value="2"
+                        >c</s:select>
+                            <%--list="#{'admin':'Admin', 'user':'User'}"--%>
+
                     </div>
                 </div>
 
