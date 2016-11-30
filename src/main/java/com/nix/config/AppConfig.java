@@ -16,7 +16,7 @@ import javax.validation.Validator;
         "com.nix.service",
         "com.nix.dao",
         "com.nix.tag",
-        "com.nix.struts",
+        "com.nix.struts.*",
 //        "com.nix.controller",
 })
 public class AppConfig {
@@ -24,13 +24,13 @@ public class AppConfig {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
+        messageSource.addBasenames("messages");
         messageSource.setCacheSeconds(60);
         return messageSource;
     }
 
     @Bean
-    public Validator validator(){
+    public LocalValidatorFactoryBean validator(){
         LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
         validatorFactoryBean.setValidationMessageSource(messageSource());
         return validatorFactoryBean;

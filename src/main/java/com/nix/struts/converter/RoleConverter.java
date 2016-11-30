@@ -16,16 +16,21 @@ public class RoleConverter extends StrutsTypeConverter {
     @Override
     public Object convertFromString(Map context, String[] values, Class toClass) {
 
-        if (values != null) {
+        if (values == null && values.length == 0) {
+            throw new TypeConversionException("can not convert role from string: " +
+                    "string[] is null or length is 0");
+        }
+
+        if (Role.class.isAssignableFrom(toClass)) {
             return roleService.findByName(values[0]);
         } else {
-            throw new TypeConversionException("can not convert role from string");
+            throw new TypeConversionException("can not convert role from string.");
         }
     }
 
     @Override
     public String convertToString(Map context, Object o) {
-        if (o.getClass().isInstance(Role.class)) {
+        if (o instanceof Role) {
             return ((Role) o).getName();
         } else {
             throw new TypeConversionException("can not convert role to string");

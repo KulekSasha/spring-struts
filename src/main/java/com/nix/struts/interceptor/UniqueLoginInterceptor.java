@@ -5,49 +5,47 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.opensymphony.xwork2.interceptor.ValidationAware;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 
 import java.util.Locale;
 
 public class UniqueLoginInterceptor extends AbstractInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(UniqueLoginInterceptor.class);
+
     @Autowired
+    @Qualifier(value = "userService")
     private UserService userService;
 
     @Autowired
+    @Qualifier(value = "messageSource")
     private MessageSource messageSource;
 
-    private String loginField;
+    private String loginAttrName;
+    private String beanParamName;
 
-//    private final Map<String, String> uniqueLoginConfig = new HashMap<String, String>();
-//
-//
-//    public Map<String, String> getUniqueLoginConfig() {
-//        return uniqueLoginConfig;
-//    }
-//
-//
-//    public void addUniqueLoginConfig(final String configName, final String configValue) {
-//        uniqueLoginConfig.put(configName, configValue);
-//    }
+    public void setLoginAttrName(String loginAttrName) {
+        this.loginAttrName = loginAttrName;
+    }
 
-//    public String getLoginField() {
-//        return loginField;
-//    }
-
-    public void setLoginField(String loginField) {
-        this.loginField = loginField;
+    public void setBeanParamName(String beanParamName) {
+        this.beanParamName = beanParamName;
     }
 
     @Override
     public String intercept(ActionInvocation invocation) throws Exception {
 
+        log.debug("interceptor param: loginAttrName - [{}]", loginAttrName);
+
         ValidationAware action = (ValidationAware) invocation.getAction();
-        String loginFromForm = ServletActionContext.getRequest().getParameter(loginField);
+        String loginFromForm = ServletActionContext.getRequest().getParameter(loginAttrName);
 
         if (userService.findByLogin(loginFromForm) != null) {
-            action.addFieldError(loginField, messageSource.getMessage("non.unique.userLogin", null, Locale.getDefault()));
+            action.addFieldError(beanParamName, messageSource.getMessage("non.unique.userLogin", null, Locale.getDefault()));
         }
 
         return invocation.invoke();

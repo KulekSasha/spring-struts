@@ -4,56 +4,134 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
     <constant name="struts.devMode" value="true"/>
+    <constant name="struts.serve.static.browserCache" value="false"/>
+    <constant name="struts.configuration.xml.reload" value="true"/>
 
-    <!--<package name="helloworld" extends="struts-default">-->
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
 
-    <!--&lt;!&ndash;<action name="delete"&ndash;&gt;-->
-    <!--&lt;!&ndash;class="com.nix.struts.AdminAction"&ndash;&gt;-->
-    <!--&lt;!&ndash;method="adminDeleteUserPost">&ndash;&gt;-->
-    <!--&lt;!&ndash;<result name="success">/WEB-INF/jsp/admin/admin.jsp</result>&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<interceptor-ref name="basicStack"/>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;</action>&ndash;&gt;-->
-
-    <!--<action name="users"-->
-    <!--class="com.nix.struts.AdminAction"-->
-    <!--method="adminPageGet" converter="com.nix.">-->
-    <!--<result name="success">/WEB-INF/jsp/admin/admin.jsp</result>-->
-    <!--<interceptor-ref name="DefaultWorkflowInterceptor">-->
-    <!--<param name="includeMethods">POST</param>-->
-    <!--</interceptor-ref>-->
-
-    <!--</action>-->
-
-    <!--</package>-->
-
-
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="working" namespace="/" extends="struts-default">
 
         <interceptors>
-            <interceptor name="unique-login" class="com.nix.struts.interceptor.UniqueLoginInterceptor"/>
+            <interceptor-stack name="myDefaultStack">
+                <interceptor-ref name="requestMethod"/>
+                <interceptor-ref name="exception"/>
+                <interceptor-ref name="alias"/>
+                <interceptor-ref name="servletConfig"/>
+                <interceptor-ref name="prepare"/>
+                <interceptor-ref name="chain"/>
+                <interceptor-ref name="scopedModelDriven"/>
+                <interceptor-ref name="modelDriven"/>
+                <interceptor-ref name="datetime"/>
+                <interceptor-ref name="staticParams"/>
+                <interceptor-ref name="actionMappingParams"/>
+                <interceptor-ref name="params"/>
+                <interceptor-ref name="conversionError"/>
+                <interceptor-ref name="workflow">
+                    <param name="excludeMethods">input,back,cancel,browse</param>
+                </interceptor-ref>
+                <interceptor-ref name="debugging"/>
+            </interceptor-stack>
+
+            <interceptor name="uniqueLogin"
+                         class="com.nix.struts.interceptor.UniqueLoginInterceptor"/>
+            <interceptor name="passwordConfirm"
+                         class="com.nix.struts.interceptor.PasswordConfirmInterceptor"/>
+            <interceptor name="hibernateValidator"
+                         class="com.nix.struts.interceptor.HibernateValidatorInterceptor"/>
+            <interceptor name="requestMethod"
+                         class="com.nix.struts.interceptor.RequestMethodInterceptor">
+                <param name="allowedMethods">GET</param>
+                <param name="resultName">notAllowed</param>
+            </interceptor>
         </interceptors>
 
-        <action name="admin/users/add" method="adminAddUser" class="com.nix.struts.AdminAction">
-            <result name="success">/WEB-INF/jsp/admin/admin_add.jsp</result>
-            <result name="notAllowed" type="redirect">/WEB-INF/jsp/errors/405.jsp</result>
+        <default-interceptor-ref name="myDefaultStack"/>
 
-        </action>
+        <global-results>
+            <result name="notAllowed">/WEB-INF/jsp/errors/405.jsp</result>
+        </global-results>
 
-        <action name="admin/users/addDo" method="adminAddUserDo"
-                class="com.nix.struts.AdminAction">
-            <result name="success" type="redirect">admin/users</result>
-            <result name="input">/WEB-INF/jsp/admin/admin_add.jsp</result>
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="unique-login">
-                <param name="loginField">newUser.login</param>
-            </interceptor-ref>
+        <!-- ====== ACTIONS ======= -->
 
-        </action>
-
-        <action name="admin/users" method="adminPageGet" class="com.nix.struts.AdminAction">
+        <!-- ADMIN Actions -->
+        <action name="admin/users" method="adminPageGet"
+                class="com.nix.struts.AdminAction" converter="">
             <result name="success">/WEB-INF/jsp/admin/admin.jsp</result>
-            <result name="login">/WEB-INF/jsp/login.jsp</result>
+            <interceptor-ref name="myDefaultStack"/>
         </action>
+
+        <action name="admin/users/add" method="adminAddUserGet"
+                class="com.nix.struts.AdminAction">
+            <result name="success">/WEB-INF/jsp/admin/admin_add.jsp</result>
+        </action>
+
+        <action name="admin/users/addDo" method="adminAddUserPost"
+                class="com.nix.struts.AdminAction">
+            <result name="success" type="redirect">
+                <param name="location">admin/users</param>
+            </result>
+            <result name="input">/WEB-INF/jsp/admin/admin_add.jsp</result>
+            <interceptor-ref name="myDefaultStack">
+                <param name="requestMethod.allowedMethods">post</param>
+            </interceptor-ref>
+            <interceptor-ref name="uniqueLogin">
+                <param name="loginAttrName">newUser.login</param>
+                <param name="beanParamName">login</param>
+            </interceptor-ref>
+            <interceptor-ref name="passwordConfirm">
+                <param name="passwordAttrName">newUser.password</param>
+                <param name="passwordConfirmAttrName">passConfirm</param>
+                <param name="beanFieldName">password</param>
+            </interceptor-ref>
+            <interceptor-ref name="hibernateValidator">
+                <param name="actionFieldsToValidate">newUser</param>
+            </interceptor-ref>
+        </action>
+
+        <action name="admin/users/*/delete" method="adminDeleteUserPost"
+                class="com.nix.struts.AdminAction">
+            <result name="success" type="redirect">
+                <param name="location">admin/users</param>
+            </result>
+            <interceptor-ref name="myDefaultStack">
+                <param name="requestMethod.allowedMethods">post</param>
+            </interceptor-ref>
+        </action>
+
+        <action name="admin/users/*/edit" method="adminEditUserGet"
+                class="com.nix.struts.AdminAction">
+            <param name="editableUser.login">{1}</param>
+            <result name="success">/WEB-INF/jsp/admin/admin_edit.jsp</result>
+            <result name="input" type="redirect">
+                <param name="location">admin/users</param>
+            </result>
+        </action>
+
+
+        <action name="admin/users/*/editDo" method="adminEditUserPost"
+                class="com.nix.struts.AdminAction">
+            <result name="success" type="redirect">
+                <param name="location">admin/users</param>
+            </result>
+            <result name="input">/WEB-INF/jsp/admin/admin_edit.jsp</result>
+            <interceptor-ref name="myDefaultStack">
+                <param name="requestMethod.allowedMethods">post</param>
+            </interceptor-ref>
+            <interceptor-ref name="passwordConfirm">
+                <param name="passwordAttrName">password</param>
+                <param name="passwordConfirmAttrName">passConfirm</param>
+                <param name="beanFieldName">password</param>
+            </interceptor-ref>
+            <interceptor-ref name="hibernateValidator">
+                <param name="actionFieldsToValidate">editableUser</param>
+            </interceptor-ref>
+        </action>
+
+        <!-- ADMIN Actions End-->
+
+        <!-- ====== ACTIONS END======= -->
+
     </package>
 
 </struts>

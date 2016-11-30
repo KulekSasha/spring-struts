@@ -30,7 +30,7 @@ public class User {
     private long id;
 
     @Column(name = "LOGIN", unique = true)
-    @NotEmpty
+    @NotEmpty(message = "{empty.login}")
     @NaturalId
     private String login;
 
