@@ -21,8 +21,12 @@ import javax.servlet.http.HttpServletRequest;
         conversions = {
                 @TypeConversion(key = "newUser.role",
                         converter = "com.nix.struts.converter.RoleConverter"),
+                @TypeConversion(key = "newUser.birthday",
+                        converter = "com.nix.struts.converter.DateConverter"),
                 @TypeConversion(key = "editableUser.role",
-                        converter = "com.nix.struts.converter.RoleConverter")
+                        converter = "com.nix.struts.converter.RoleConverter"),
+                @TypeConversion(key = "editableUser.birthday",
+                        converter = "com.nix.struts.converter.DateConverter")
         })
 public class AdminAction extends ActionSupport implements PrincipalAware, ServletRequestAware {
 
@@ -33,16 +37,6 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
     private HttpServletRequest request;
     private User newUser;
     private User editableUser;
-    private String[] roles = new String[]{"admin", "user"};
-
-
-    public String[] getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String[] roles) {
-        this.roles = roles;
-    }
 
     @Autowired
     public void setUserService(@Qualifier("userService") UserService userService) {
@@ -94,15 +88,15 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
     }
 
     public String adminAddUserPost() {
-        log.debug("add new user: {}", newUser);
-        if (getFieldErrors().size() > 0) {
+        log.debug("add new user from form: {}", newUser);
 
-            return "input";
+        if (getFieldErrors().size() > 0) {
+            return INPUT;
         }
 
         log.debug("save new user: {}", newUser);
         userService.create(newUser);
-        return "success";
+        return SUCCESS;
     }
 
     public String adminEditUserGet() {
@@ -116,10 +110,15 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
     }
 
     public String adminEditUserPost() {
-        log.debug("show form for user edit; login - {}", editableUser);
+        log.debug("editable user from user from: {}", editableUser);
 
+        if (getFieldErrors().size() > 0) {
+            return INPUT;
+        }
 
-        return INPUT;
+        log.debug("update user: {}", editableUser);
+        userService.update(editableUser);
+        return SUCCESS;
     }
 
     public String adminDeleteUserPost() {

@@ -28,7 +28,8 @@
                 <interceptor-ref name="params"/>
                 <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="workflow">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
+                    <param name="excludeMethods">input,back,cancel,browse,
+                        *Post</param>
                 </interceptor-ref>
                 <interceptor-ref name="debugging"/>
             </interceptor-stack>
@@ -50,6 +51,7 @@
 
         <global-results>
             <result name="notAllowed">/WEB-INF/jsp/errors/405.jsp</result>
+            <result name="login">/WEB-INF/jsp/login.jsp</result>
         </global-results>
 
         <!-- ====== ACTIONS ======= -->
@@ -108,7 +110,6 @@
             </result>
         </action>
 
-
         <action name="admin/users/editDo" method="adminEditUserPost"
                 class="com.nix.struts.AdminAction">
             <result name="success" type="redirect">
@@ -128,7 +129,49 @@
             </interceptor-ref>
         </action>
 
-        <!-- ADMIN Actions End-->
+        <!-- USER Actions -->
+        <action name="user/user" method="userPageGet"
+                class="com.nix.struts.UserAction">
+            <result name="success">/WEB-INF/jsp/user/user.jsp</result>
+        </action>
+
+        <!-- LOGIN Actions -->
+        <action name="login" method="execute"
+                class="com.nix.struts.LoginAction">
+            <result name="success">/WEB-INF/jsp/login.jsp</result>
+        </action>
+
+        <action name="" method="execute"
+                class="com.nix.struts.LoginAction">
+            <result name="success">/WEB-INF/jsp/login.jsp</result>
+        </action>
+
+        <!-- REGISTRATION Actions -->
+        <action name="registration/new" method="registrationPageGet"
+                class="com.nix.struts.RegistrationAction">
+            <result name="success">/WEB-INF/jsp/registration/registration.jsp</result>
+        </action>
+
+        <action name="registration/newDo" method="registrationPagePost"
+                class="com.nix.struts.RegistrationAction">
+            <result name="success">/WEB-INF/jsp/login.jsp</result>
+            <result name="input">/WEB-INF/jsp/registration/registration.jsp</result>
+            <interceptor-ref name="myDefaultStack">
+                <param name="requestMethod.allowedMethods">post</param>
+            </interceptor-ref>
+            <interceptor-ref name="uniqueLogin">
+                <param name="loginAttrName">newUser.login</param>
+                <param name="beanParamName">login</param>
+            </interceptor-ref>
+            <interceptor-ref name="passwordConfirm">
+                <param name="passwordAttrName">newUser.password</param>
+                <param name="passwordConfirmAttrName">passConfirm</param>
+                <param name="beanFieldName">password</param>
+            </interceptor-ref>
+            <interceptor-ref name="hibernateValidator">
+                <param name="actionFieldsToValidate">newUser</param>
+            </interceptor-ref>
+        </action>
 
         <!-- ====== ACTIONS END======= -->
 

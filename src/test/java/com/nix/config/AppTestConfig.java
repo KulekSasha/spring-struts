@@ -18,7 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import static java.util.Arrays.asList;
 
 @Configuration
-public class ControllerTestConfig {
+public class AppTestConfig {
 
     @Bean
     public UserService userService() {

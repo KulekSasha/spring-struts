@@ -16,7 +16,7 @@ public class RoleConverter extends StrutsTypeConverter {
     @Override
     public Object convertFromString(Map context, String[] values, Class toClass) {
 
-        if (values == null && values.length == 0) {
+        if (values == null || values.length == 0) {
             throw new TypeConversionException("can not convert role from string: " +
                     "string[] is null or length is 0");
         }

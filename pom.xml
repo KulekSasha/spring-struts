@@ -19,7 +19,7 @@
         <hibernate.version>5.2.4.Final</hibernate.version>
         <servlet-api.version>3.1.0</servlet-api.version>
 
-            <webapp.name>lab-17-spring</webapp.name>
+        <webapp.name>lab-20-struts</webapp.name>
     </properties>
 
     <dependencyManagement>
@@ -50,14 +50,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
-
-        <!--to remove-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <!--to remove-->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -102,17 +94,6 @@
             <artifactId>struts2-spring-plugin</artifactId>
             <version>${struts2.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-convention-plugin</artifactId>
-            <version>${struts2.version}</version>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.umeshawasthi</groupId>-->
-            <!--<artifactId>struts2-jsr303-validation-plugin</artifactId>-->
-            <!--<version>1.0</version>-->
-        <!--</dependency>-->
-
 
         <!--Validation-->
         <dependency>

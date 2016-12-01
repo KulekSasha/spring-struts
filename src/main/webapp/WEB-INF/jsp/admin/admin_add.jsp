@@ -101,14 +101,21 @@
                     </div>
                 </div>
 
-                <div class="form-group <s:if test="fieldErrors.containsKey('birthday')">has-error</s:if>">
+                <div class="form-group <s:if test="fieldErrors.containsKey('birthday')">has-error</s:if>
+                    <s:if test="fieldErrors.containsKey('newUser.birthday')">has-error</s:if>">
                     <label class="control-label col-lg-2" for="birthday">Birthday:</label>
                     <div class="col-lg-4">
-                        <fmt:formatDate pattern="yyyy-MM-dd" value="${newUser.birthday}"
-                                        var="dob"/>
-                        <input type="date" value="${dob}" name="newUser.birthday" id="birthday"
-                               class="form-control"/>
+
+                        <s:date format="yyyy-MM-dd" name="newUser.birthday" var="dob"/>
+                        <s:textfield class="form-control" name="newUser.birthday"
+                                     value="%{#dob}" id="birthday"/>
+
                         <s:fielderror fieldName="birthday" cssClass="control-label"/>
+                        <s:if test="fieldErrors.containsKey('newUser.birthday')">
+                            <ul class="control-label ">
+                                <li>"Date should be in format YYYY-MM-DD"</li>
+                            </ul>
+                        </s:if>
                     </div>
                 </div>
 

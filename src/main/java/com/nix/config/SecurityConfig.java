@@ -82,12 +82,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AuthenticationSuccessHandlerImpl();
     }
 
-    @Bean
-    public ReCaptchaImpl reCaptcha() {
-        log.info("creation of {} bean", ReCaptchaImpl.class.getCanonicalName());
-        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey(env.getProperty("recaptcha.secret-key"));
-        reCaptcha.setPublicKey(env.getProperty("recaptcha.site-key"));
-        return reCaptcha;
-    }
+
 }

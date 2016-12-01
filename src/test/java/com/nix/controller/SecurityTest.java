@@ -1,8 +1,7 @@
 package com.nix.controller;
 
-import com.nix.config.ControllerTestConfig;
+import com.nix.config.AppTestConfig;
 import com.nix.config.SecurityConfig;
-import com.nix.config.WebAppConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(
-        classes = {ControllerTestConfig.class,
-                WebAppConfig.class,
+        classes = {AppTestConfig.class,
                 SecurityConfig.class})
 @WebAppConfiguration
 public class SecurityTest {
