@@ -241,7 +241,7 @@
 
                     <warFile>target/${webapp.name}.war</warFile>
                     <url>http://localhost:8080/manager/text</url>
-                    <server>TomcatServer</server>
+                    <server>TomcatServerMaven</server>
                     <path>/${webapp.name}</path>
                 </configuration>
             </plugin>

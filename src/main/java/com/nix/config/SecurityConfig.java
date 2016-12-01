@@ -1,7 +1,6 @@
 package com.nix.config;
 
 import com.nix.security.AuthenticationSuccessHandlerImpl;
-import net.tanesha.recaptcha.ReCaptchaImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
                 .authorizeRequests()
-                .antMatchers("/resources/**", "/", "/login", "/logout", "/errors/**", // TODO remove ** in /**
+                .antMatchers("/resources/**", "/", "/login", "/logout", "/errors/**",
                         "/registration/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").access("hasRole('ADMIN') or hasRole('USER')")

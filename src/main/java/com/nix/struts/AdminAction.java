@@ -84,7 +84,7 @@ public class AdminAction extends ActionSupport implements PrincipalAware, Servle
     public String adminAddUserGet() {
         log.debug("show form for new user creation");
         newUser = new User();
-        return "success";
+        return SUCCESS;
     }
 
     public String adminAddUserPost() {

@@ -92,7 +92,7 @@ public class UserListTag implements Tag {
         try {
             out.print(sb.toString());
         } catch (IOException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
 
         return SKIP_BODY;

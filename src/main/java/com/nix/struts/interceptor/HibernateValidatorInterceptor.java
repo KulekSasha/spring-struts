@@ -13,7 +13,6 @@ import org.springframework.context.MessageSource;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.lang.reflect.Field;
-import java.util.Iterator;
 import java.util.Set;
 
 public class HibernateValidatorInterceptor extends AbstractInterceptor {
@@ -59,10 +58,8 @@ public class HibernateValidatorInterceptor extends AbstractInterceptor {
     }
 
     private void validate(ValidationAware action) throws Exception {
-        Iterator<String> iterator = fieldsToValidate.iterator();
 
-        while (iterator.hasNext()) {
-            String fieldName = iterator.next();
+        for (String fieldName : fieldsToValidate) {
             Field declaredField = action.getClass().getDeclaredField(fieldName);
             declaredField.setAccessible(true);
             Object o = declaredField.get(action);

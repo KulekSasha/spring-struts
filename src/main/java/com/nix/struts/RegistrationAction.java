@@ -102,10 +102,8 @@ public class RegistrationAction extends ActionSupport implements ServletRequestA
 
         if (getFieldErrors().size() > 0 || !reCaptchaResponse.isValid()) {
             log.debug("some errors during registration");
-
             return INPUT;
         }
-
 
         userService.create(newUser);
         return SUCCESS;
